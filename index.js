@@ -14,7 +14,7 @@ app.use(
   })
 )
 
-app.use('', routes.Exercice)
+app.use('/api/exercice', routes.Exercice)
 
 app.listen(port, (err) => {
     if (err) {
