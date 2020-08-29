@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
     const sql = ''
     connection.query(sql, (err, result) => {
         if (err) {
-            res.status(500).send('Erreur dans la récupération des information about me')
+            res.status(500).send('Erreur dans la récupération des information exercice')
         } else {
             res.send(result)
         }
