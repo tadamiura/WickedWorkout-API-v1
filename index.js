@@ -15,6 +15,9 @@ app.use(
 )
 
 app.use('/api/exercice', routes.Exercice)
+app.use('/api/media', routes.Media)
+
+
 
 app.listen(port, (err) => {
     if (err) {
