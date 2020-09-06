@@ -5,7 +5,7 @@ const router = express.Router()
 
 //Get all exercices names
 router.get('/', (req, res) => {
-    const sql = `SELECT name FROM exercices`
+    const sql = `SELECT id, name FROM exercices`
     connection.query(sql, (err, result) => {
         if (err) {
             res.status(500).send('Erreur dans la récupération des information exercice')
