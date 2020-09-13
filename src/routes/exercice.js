@@ -31,7 +31,7 @@ router.get('/:id', (req, res) => {
   //Get Media of an exercice
   router.get('/:id/media', (req, res) => {
     const idExercice = req.params.id
-    const sql = `SELECT name, exercice_id, url_name FROM medias 
+    const sql = `SELECT name, exercice_id, url_name, media_type FROM medias 
     JOIN exercices ON exercices.id = exercice_id WHERE exercices.id = ?`
     connection.query(sql, [idExercice], (err, result) => {
       if (err) {
