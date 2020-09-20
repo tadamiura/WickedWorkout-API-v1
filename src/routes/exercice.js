@@ -42,5 +42,26 @@ router.get('/:id', (req, res) => {
     })
   })
 
+//POST 
+//post a new exercice
+router.post('/', (req, res) => {
+  const formData = req.body
+  const sql = `INSERT INTO exercices SET ?`
+  connection.query(sql, [formData], (err, result) => {
+      if(err){
+          res.status(500).send("Erreur lors de la création d'un exercice")
+      } else {
+        const sql = `SELECT * FROM exercices WHERE id = ?`
+        connection.query(sql, result.insertId, (err, result) => {
+          if(err) {
+            res.status(500).send("Erreur lors de la création d'un exercice")
+          } else {
+            res.status(201).json(result)
+          }
+        })
+      }
+  })
+})
+
 
 module.exports = router
