@@ -1,6 +1,6 @@
 const express = require('express')
 const { connection } = require('../helper/conf.js')
-const { route } = require('./exercice.js')
+const { route } = require('./exercices.js')
 const router = express.Router()
 
 
@@ -20,7 +20,10 @@ router.get('/', (req, res) => {
 // Get one exercice by id
 router.get('/:id', (req, res) => {
     const idMedia = req.params.id
-    const sql = `SELECT * FROM medias WHERE id = ?`
+    const sql = 
+    `SELECT * 
+    FROM medias 
+    WHERE id = ?`
     connection.query(sql, [idMedia], (err, result) => {
       if (err) {
         res.status(500).send("Erreur dans la récupération d'un media")
@@ -39,7 +42,10 @@ router.post('/', (req, res) => {
         if(err){
             res.status(500).send("Erreur lors de la création d'un média")
         } else {
-            const sql = `SELECT * FROM medias WHERE id = ?`
+            const sql = 
+            `SELECT * 
+            FROM medias 
+            WHERE id = ?`
         connection.query(sql, result.insertId, (err, result) => {
           if(err) {
             res.status(500).send("Erreur lors de la création d'un media")

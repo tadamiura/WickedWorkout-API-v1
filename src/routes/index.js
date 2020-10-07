@@ -1,7 +1,7 @@
-const Exercice = require('./exercice')
-const Media = require('./media')
+const Exercices = require('./exercices')
+const Medias = require('./medias')
 
 module.exports = {
-    Exercice,
-    Media
+    Exercices,
+    Medias
 }

@@ -14,8 +14,8 @@ app.use(
   })
 )
 
-app.use('/api/exercice', routes.Exercice)
-app.use('/api/media', routes.Media)
+app.use('/api/exercices', routes.Exercices)
+app.use('/api/medias', routes.Medias)
 
 
 
