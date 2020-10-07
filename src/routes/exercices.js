@@ -89,4 +89,20 @@ router.post('/:id/medias', (req, res) => {
   })
 })
 
+//DELETE
+//delete an exercice
+router.delete('/:id', (req, res) => {
+  const idExercice = req.params.id
+  const sql = 
+  `DELETE FROM exercices
+  WHERE id = ?`
+  connection.query(sql, [idExercice], err => {
+    if (err) {
+      res.status(500).send("Erreur lors de la suppresion d'un exercice")
+    } else {
+      res.sendStatus(200)
+    }
+  })
+})
+
 module.exports = router
