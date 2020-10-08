@@ -107,9 +107,35 @@ router.put('/:id', (req,res) => {
   })
 })
 
+//Update a track of an exercice
+router.put('/:id/medias/:media', (req,res) => {
+  // const formData = req.body
+  const values = [
+    formData = req.body,
+    idMedia = req.params.media,
+    idExercice = req.params.id,
+  ]
+  
+  const sql = 
+  `UPDATE media
+  SET ?
+  WHERE 1=1
+  AND id = ?
+  AND exercice_id = ?`
+
+  connection.query(sql, values, (err, results) => {
+    if (err) {
+      res.status(500).send("Erreur dans la modification du média")
+    } else {
+      console.log(values)
+      res.status(200).send(req.body)
+    }
+  })
+})
+
 //DELETE
 //delete an exercice
-router.delete('/:id', (req, res) => {
+router.delete('/:id', (req,res) => {
   const idExercice = req.params.id
   const sql = 
   `DELETE FROM exercice
@@ -124,7 +150,7 @@ router.delete('/:id', (req, res) => {
 })
 
 //delete a media of an exercice
-router.delete('/:id/medias/:media', (req, res) => {
+router.delete('/:id/medias/:media', (req,res) => {
   const values = [
     idExercice = req.params.id,
     idMedia = req.params.media
