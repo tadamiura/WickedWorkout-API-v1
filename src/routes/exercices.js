@@ -33,7 +33,7 @@ router.get('/:id', (req, res) => {
   })
 
   //Get Media of an exercice
-  router.get('/:id/media', (req, res) => {
+  router.get('/:id/medias', (req, res) => {
     const idExercice = req.params.id
     const sql = 
     `SELECT name, exercice_id, url_name, media_type 
@@ -99,6 +99,28 @@ router.delete('/:id', (req, res) => {
   connection.query(sql, [idExercice], err => {
     if (err) {
       res.status(500).send("Erreur lors de la suppresion d'un exercice")
+    } else {
+      res.sendStatus(200)
+    }
+  })
+})
+
+//delete a media of an exercice
+router.delete('/:id/medias/:media', (req, res) => {
+  const values = [
+    idExercice = req.params.id,
+    idMedia = req.params.media
+  ]
+
+  const sql = 
+  `DELETE FROM medias
+  WHERE 1=1
+  AND id = ? 
+  AND exercice_id = ?`
+  
+  connection.query(sql, values, err => {
+    if (err) {
+      res.status(500).send("Erreur dans la suppression du média de l'exercice")
     } else {
       res.sendStatus(200)
     }
