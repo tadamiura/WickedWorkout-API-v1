@@ -7,7 +7,7 @@ const router = express.Router()
 //GET ROUTES
 //get all medias
 router.get('/', (req, res) => {
-    const sql = 'SELECT * FROM medias'
+    const sql = 'SELECT * FROM media'
     connection.query(sql, (err, result) => {
         if(err) {
             res.status(500).send('Erreur dans la récupération des médias')
@@ -22,7 +22,7 @@ router.get('/:id', (req, res) => {
     const idMedia = req.params.id
     const sql = 
     `SELECT * 
-    FROM medias 
+    FROM media 
     WHERE id = ?`
     connection.query(sql, [idMedia], (err, result) => {
       if (err) {
@@ -32,29 +32,5 @@ router.get('/:id', (req, res) => {
       }
     })
   })
-
-//POST 
-//post a new media
-router.post('/', (req, res) => {
-    const formData = req.body
-    const sql = `INSERT INTO medias SET ?`
-    connection.query(sql, [formData], (err, result) => {
-        if(err){
-            res.status(500).send("Erreur lors de la création d'un média")
-        } else {
-            const sql = 
-            `SELECT * 
-            FROM medias 
-            WHERE id = ?`
-        connection.query(sql, result.insertId, (err, result) => {
-          if(err) {
-            res.status(500).send("Erreur lors de la création d'un media")
-          } else {
-            res.status(201).json(result)
-          }
-        })
-        }
-    })
-})
 
 module.exports = router

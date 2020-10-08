@@ -7,7 +7,7 @@ const router = express.Router()
 router.get('/', (req, res) => {
     const sql = 
     `SELECT id, name 
-    FROM exercices`
+    FROM exercice`
     connection.query(sql, (err, result) => {
         if (err) {
             res.status(500).send('Erreur dans la récupération des information exercice')
@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
     const idExercice = req.params.id
     const sql = 
-    `SELECT * FROM exercices 
+    `SELECT * FROM exercice
     WHERE id = ?`
     connection.query(sql, [idExercice], (err, result) => {
       if (err) {
@@ -37,10 +37,10 @@ router.get('/:id', (req, res) => {
     const idExercice = req.params.id
     const sql = 
     `SELECT name, exercice_id, url_name, media_type 
-    FROM medias 
-    JOIN exercices 
-    ON exercices.id = exercice_id 
-    WHERE exercices.id = ?`
+    FROM media 
+    JOIN exercice 
+    ON exercice.id = exercice_id 
+    WHERE exercice.id = ?`
     connection.query(sql, [idExercice], (err, result) => {
       if (err) {
         res.status(500).send("Erreur dans la récupération du média d'un exercice")
@@ -54,7 +54,7 @@ router.get('/:id', (req, res) => {
 //post a new exercice
 router.post('/', (req, res) => {
   const formData = req.body
-  const sql = `INSERT INTO exercices SET ?`
+  const sql = `INSERT INTO exercice SET ?`
   connection.query(sql, [formData], (err, result) => {
       if(err){
           res.status(500).send("Erreur lors de la création d'un exercice")
@@ -67,14 +67,14 @@ router.post('/', (req, res) => {
 //post a media of an exercicie
 router.post('/:id/medias', (req, res) => {
   const formData = req.body
-  const sql1 = `INSERT INTO medias SET ?`
+  const sql1 = `INSERT INTO media SET ?`
   connection.query(sql1, [formData], (err, results) => {
     if(err) {
       res.status(500).send("Erreur lors de la création d'un média")
     } else {
       const idExercice = req.params.id
       const sql2 = 
-      `UPDATE medias 
+      `UPDATE media 
       SET exercice_id = ? 
       WHERE id = ?`
       connection.query(sql2, [idExercice, results.insertId], (err, results) => {
@@ -94,7 +94,7 @@ router.post('/:id/medias', (req, res) => {
 router.delete('/:id', (req, res) => {
   const idExercice = req.params.id
   const sql = 
-  `DELETE FROM exercices
+  `DELETE FROM exercice
   WHERE id = ?`
   connection.query(sql, [idExercice], err => {
     if (err) {
@@ -113,7 +113,7 @@ router.delete('/:id/medias/:media', (req, res) => {
   ]
 
   const sql = 
-  `DELETE FROM medias
+  `DELETE FROM media
   WHERE 1=1
   AND id = ? 
   AND exercice_id = ?`
