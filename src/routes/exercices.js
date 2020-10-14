@@ -127,7 +127,6 @@ router.put('/:id/medias/:media', (req,res) => {
     if (err) {
       res.status(500).send("Erreur dans la modification du média")
     } else {
-      console.log(values)
       res.status(200).send(req.body)
     }
   })
