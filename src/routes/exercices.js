@@ -6,7 +6,7 @@ const router = express.Router()
 //Get all exercices names
 router.get('/', (req, res) => {
     const sql = 
-    `SELECT id, name 
+    `SELECT id, name, url_name 
     FROM exercice`
     connection.query(sql, (err, result) => {
         if (err) {
@@ -58,7 +58,6 @@ router.post('/', (req, res) => {
   connection.query(sql, [formData], (err, result) => {
       if(err){
           res.status(500).send("Erreur lors de la création d'un exercice")
-          console.log('formData', req)
       } else {
         res.sendStatus(200)
       }
