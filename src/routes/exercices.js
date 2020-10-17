@@ -58,6 +58,7 @@ router.post('/', (req, res) => {
   connection.query(sql, [formData], (err, result) => {
       if(err){
           res.status(500).send("Erreur lors de la création d'un exercice")
+          console.log('formData', req)
       } else {
         res.sendStatus(200)
       }
@@ -79,7 +80,6 @@ router.post('/:id/medias', (req, res) => {
       WHERE id = ?`
       connection.query(sqlUpdate, [idExercice, results.insertId], (err, results) => {
         if (err) {
-          console.log(err)
           res.status(500).send("Erreur dans la création de l'association du média et de son exercice")
         } else {
           res.sendStatus(200)
