@@ -16,7 +16,9 @@ app.use(
 
 app.use('/api/exercices', routes.Exercices)
 app.use('/api/medias', routes.Medias)
-app.use('/api/auth', routes.Authentification)
+app.use('/api/auth', routes.Authentification),
+app.use('/api/register', routes.Register)
+
 
 
 

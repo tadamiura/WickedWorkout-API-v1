@@ -1,13 +1,14 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
-const { connection } = require('../helper/service')
-const { emailValidator } = require('../services')
+const { connection } = require('../helper/conf')
+const { emailValidator } = require('../services/authService')
 
 const router = express.Router()
 
 const checkUser = (req, res, next) => {
-	connection.query('SELECT id FROM user WHERE email = ?', req.body.mail, (err, result) => {
+	const mail = req.body.mail
+	connection.query('SELECT id FROM user WHERE email = ?', mail, (err, result) => {
 		if (err) {
 			return res.status(500).send('Internal server error')
 		} else if (result.length>0) {
@@ -15,9 +16,9 @@ const checkUser = (req, res, next) => {
 		}
 		// If we use register in another goal, we may change or create a const createUser for this variable
 		const user = {
-		name: req.body.nom,
-		firstname: req.body.prenom,
-		email : req.body.email,
+		nom: req.body.name,
+		prenom: req.body.firstname,
+		email : req.body.mail,
 		password: bcrypt.hashSync(req.body.password)
 		}
 		req.user = user
@@ -28,9 +29,10 @@ const checkUser = (req, res, next) => {
 const registerUserDb = (req, res, next) => {
 	  connection.query('INSERT INTO user SET ?', req.user, (err, result) => {
 			if (err) {
+				console.log(err)
 				return res.status(500).send('Cannot register the user')
 			}
-			connection.query('SELECT id, name, firstname, email FROM user WHERE id = ?', result.insertId, (err, result) => {
+			connection.query('SELECT id, nom, prenom, email FROM user WHERE id = ?', result.insertId, (err, result) => {
 				if (err) {
 					return res.status(500).send('Internal server error')
 				}
@@ -39,6 +41,6 @@ const registerUserDb = (req, res, next) => {
 		})
 }
 
-router.post('/', emailValidator, checkUser, registerUserDb) 
+router.post('/', checkUser, emailValidator, registerUserDb) 
 
 module.exports = router
