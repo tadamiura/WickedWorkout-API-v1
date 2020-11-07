@@ -10,8 +10,7 @@ const checkUser = (req, res, next) => {
 	const mail = req.body.email
 	connection.query('SELECT * FROM user WHERE email = ?', mail, (err, result) => {
 		if (err) {
-			console.log(err)
-			return res.status(500).send('Internal server error 1')
+			return res.status(500).send('Internal server error')
 		} else if (result.length>0) {
 			return res.status(409).send('User already exists')
 		}
@@ -30,12 +29,11 @@ const checkUser = (req, res, next) => {
 const registerUserDb = (req, res, next) => {
 	  connection.query('INSERT INTO user SET ?', req.user, (err, result) => {
 			if (err) {
-				console.log(err)
 				return res.status(500).send('Cannot register the user')
 			}
 			connection.query('SELECT id, nom, prenom, email FROM user WHERE id = ?', result.insertId, (err, result) => {
 				if (err) {
-					return res.status(500).send('Internal server error 2')
+					return res.status(500).send('Internal server error')
 				}
 				res.status(200).send(result)
 			})   
