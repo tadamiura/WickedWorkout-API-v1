@@ -7,18 +7,19 @@ const { emailValidator } = require('../services/authService')
 const router = express.Router()
 
 const checkUser = (req, res, next) => {
-	const mail = req.body.mail
-	connection.query('SELECT id FROM user WHERE email = ?', mail, (err, result) => {
+	const mail = req.body.email
+	connection.query('SELECT * FROM user WHERE email = ?', mail, (err, result) => {
 		if (err) {
-			return res.status(500).send('Internal server error')
+			console.log(err)
+			return res.status(500).send('Internal server error 1')
 		} else if (result.length>0) {
 			return res.status(409).send('User already exists')
 		}
 		// If we use register in another goal, we may change or create a const createUser for this variable
 		const user = {
-		nom: req.body.name,
-		prenom: req.body.firstname,
-		email : req.body.mail,
+		nom: req.body.nom,
+		prenom: req.body.prenom,
+		email : req.body.email,
 		password: bcrypt.hashSync(req.body.password)
 		}
 		req.user = user
@@ -34,7 +35,7 @@ const registerUserDb = (req, res, next) => {
 			}
 			connection.query('SELECT id, nom, prenom, email FROM user WHERE id = ?', result.insertId, (err, result) => {
 				if (err) {
-					return res.status(500).send('Internal server error')
+					return res.status(500).send('Internal server error 2')
 				}
 				res.status(200).send(result)
 			})   
