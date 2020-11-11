@@ -1,6 +1,7 @@
 const express = require('express')
 const { connection } = require('../helper/conf.js')
 const router = express.Router()
+const { verifyToken } = require('../helper/auth.service')
 
 
 //Get all exercices names
@@ -16,6 +17,20 @@ router.get('/', (req, res) => {
         }
     })
 })
+
+router.get('/back-office', verifyToken, (req, res) => {
+  const sql = 
+  `SELECT id, name, url_name 
+  FROM exercice`
+  connection.query(sql, (err, result) => {
+      if (err) {
+          res.status(500).send('Erreur dans la récupération des information exercice')
+      } else {
+          res.send(result)
+      }
+  })
+})
+
 
 // Get one exercice by id
 router.get('/:id', (req, res) => {
@@ -52,7 +67,7 @@ router.get('/:id', (req, res) => {
 
 //POST 
 //post a new exercice
-router.post('/', (req, res) => {
+router.post('/', verifyToken, (req, res) => {
   const formData = req.body
   const sql = `INSERT INTO exercice SET ?`
   connection.query(sql, [formData], (err, result) => {

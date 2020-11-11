@@ -4,6 +4,7 @@ const app = express()
 const cors = require('cors')
 const routes = require('./src/routes/index')
 const { port } = require('./src/helper/service')
+const { verifyToken } = require('./src/helper/auth.service')
 
 app.use(cors())
 
@@ -15,11 +16,12 @@ app.use(
 )
 
 app.use('/api/exercices', routes.Exercices)
-app.use('/api/medias', routes.Medias)
 app.use('/api/auth', routes.Authentification),
 app.use('/api/register', routes.Register)
 
-
+app.get('/api/verify', verifyToken, (req, res) => {
+  return res.status(200).send('token verified')
+})
 
 
 

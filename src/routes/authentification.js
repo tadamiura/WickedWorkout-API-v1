@@ -3,7 +3,7 @@ const { connection } = require('../helper/conf')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { secret } = require('../helper/service.js')
-const { emailValidator } = require('../services/authService')
+const { emailValidator } = require('../helper/auth.service')
 const router = express.Router()
 
 const checkUser = (req, res, next) => {
@@ -43,7 +43,7 @@ const createToken = (req, res, next) => {
     )
 		res.header('Access-Control-Expose-Headers', 'x-access-token')
 		res.set('x-access-token', token)
-  	res.status(200).send({ auth: true })
+        res.status(200).send({ auth: true })
 }
 
 router.post('/', emailValidator, checkUser, createToken)
