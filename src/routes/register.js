@@ -2,7 +2,7 @@ const express = require('express')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const { connection } = require('../helper/conf')
-const { emailValidator } = require('../services/authService')
+const { emailValidator } = require('../helper/auth.service')
 
 const router = express.Router()
 
@@ -35,7 +35,19 @@ const registerUserDb = (req, res, next) => {
 				if (err) {
 					return res.status(500).send('Internal server error')
 				}
-				res.status(200).send(result)
+				// If all went well, records is an array, from which we use the 1st item
+				const insertedUser = result[0];
+				// Extract all the fields *but* password as a new object (user)
+				const { password, ...user } = insertedUser;
+				// Get the host + port (localhost:3000) from the request headers
+				const host = req.get('host');
+				// Compute the full location, e.g. http://localhost:3000/api/users/132
+				// This will help the client know where the new resource can be found!
+				const location = `http://${host}${req.url}/${user.id}`;
+				return res
+				  .status(201)
+				  .set('Location', location)
+				  .json(user);
 			})   
 		})
 }
