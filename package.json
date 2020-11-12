@@ -4,7 +4,9 @@
   "description": "Wicked Workout project's API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon",
+    "test": "jest",
+    "test:watch": "jest --watchAll"  
   },
   "repository": {
     "type": "git",
@@ -23,5 +25,9 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.1.0"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "supertest": "^6.0.1"
   }
 }
