@@ -1,7 +1,6 @@
 // const app = require('./app');
 const { port } = require('./src/helper/service')
-const express = require('express')
-const app = express()
+const app = require('./app')
 
 app.listen(port, (err) => {
     if (err) {

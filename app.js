@@ -21,3 +21,5 @@ app.use('/api/register', routes.Register)
 app.get('/api/verify', verifyToken, (req, res) => {
   return res.status(200).send('token verified')
 })
+
+module.exports = app;
