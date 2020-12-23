@@ -105,7 +105,7 @@ router.post('/:id/medias', (req, res) => {
 
 //UPDATE
 //Update an exercice
-router.put('/:id', (req,res) => {
+router.put('/:id', verifyToken, (req,res) => {
   const formData = req.body
   const idExercice = req.params.id
   const sql = 
@@ -148,7 +148,7 @@ router.put('/:id/medias/:media', (req,res) => {
 
 //DELETE
 //delete an exercice
-router.delete('/:id', (req,res) => {
+router.delete('/:id', verifyToken, (req,res) => {
   const idExercice = req.params.id
   const sql = 
   `DELETE FROM exercice
