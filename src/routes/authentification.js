@@ -11,7 +11,7 @@ const checkUser = (req, res, next) => {
 
     connection.query('SELECT * FROM user WHERE email = ?', email, (err, result) => {
         if (err) {
-            return res.status(500).send(`there are an error : ${err}`)
+            return res.status(500).send(`${err}`)
         } else if(!result[0]) {
             return res.status(409).send('Unknown user')
         }
