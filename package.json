@@ -4,7 +4,8 @@
   "description": "Wicked Workout project's API",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon",
+    "start": "node index",
+    "start:dev": "nodemon",
     "test": "jest",
     "test:watch": "jest --watchAll"  
   },
