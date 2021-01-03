@@ -7,7 +7,7 @@ const router = express.Router()
 //Get all warm ups
 router.get('/', (req, res) => {
     const sql = 
-    `SELECT name, url_name
+    `SELECT id, name, url_name
     FROM warm_up`
     connection.query(sql, (err, result) => {
         if (err) {
