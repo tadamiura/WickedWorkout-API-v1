@@ -7,11 +7,10 @@ const router = express.Router()
 //Get all warm ups
 router.get('/', (req, res) => {
     const sql = 
-    `SELECT id, name, url_name
+    `SELECT name
     FROM warm_up`
     connection.query(sql, (err, result) => {
         if (err) {
-            console.log(err)
             res.status(500).send("Erreur dans la récupération des information de l'échauffement")
         } else {
             res.send(result)
@@ -34,4 +33,5 @@ router.get('/:id', (req, res) => {
       }
     })
   })
+  
 module.exports = router

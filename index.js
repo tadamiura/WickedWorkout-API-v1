@@ -1,4 +1,3 @@
-// const app = require('./app');
 const { port } = require('./src/helper/service')
 const app = require('./app')
 
