@@ -1,9 +1,11 @@
-const Exercices = require('./exercices')
 const Authentification = require('./authentification') 
+const Exercices = require('./exercices')
 const Register = require('./register')
+const WarmUps = require('./warmUps')
 
 module.exports = {
-    Exercices,
     Authentification,
-    Register
+    Exercices,
+    Register,
+    WarmUps
 }
