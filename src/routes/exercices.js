@@ -31,6 +31,36 @@ router.get('/back-office', verifyToken, (req, res) => {
   })
 })
 
+//GET exercices for Tabata Workout
+router.get('/workouts/tabata', (req, res) => {
+  const sql = 
+  `SELECT id, name, url_name
+  FROM exercice
+  WHERE is_tabata_workout = 1`
+  connection.query(sql, (err, result) => {
+      if (err) {
+          res.status(500).send('Erreur dans la récupération des information exercice pour le tabata')
+      } else {
+          res.send(result)
+      }
+  })
+})
+
+//GET exercices for 666 Workout
+router.get('/workouts/666', (req, res) => {
+  const sql = 
+  `SELECT id, name, url_name
+  FROM exercice
+  WHERE is_six_workout = 1`
+  connection.query(sql, (err, result) => {
+      if (err) {
+        console.log(err)
+          res.status(500).send('Erreur dans la récupération des information exercice pour le 666')
+      } else {
+          res.send(result)
+      }
+  })
+})
 
 // Get one exercice by id
 router.get('/:id', (req, res) => {
