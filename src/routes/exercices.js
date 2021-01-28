@@ -62,6 +62,22 @@ router.get('/workouts/666', (req, res) => {
   })
 })
 
+//GET exercices for 30/30 Workout
+router.get('/workouts/it30', (req, res) => {
+  const sql = 
+  `SELECT id, name, url_name
+  FROM exercice
+  WHERE is_thirty_thirty_workout = 1`
+  connection.query(sql, (err, result) => {
+      if (err) {
+        console.log(err)
+          res.status(500).send('Erreur dans la récupération des information exercice pour le 30/30')
+      } else {
+          res.send(result)
+      }
+  })
+})
+
 // Get one exercice by id
 router.get('/:id', (req, res) => {
     const idExercice = req.params.id
@@ -77,24 +93,6 @@ router.get('/:id', (req, res) => {
     })
   })
 
-  //Get Media of an exercice
-  router.get('/:id/medias', (req, res) => {
-    const idExercice = req.params.id
-    const sql = 
-    `SELECT name, exercice_id, url_name, media_type 
-    FROM media 
-    JOIN exercice 
-    ON exercice.id = exercice_id 
-    WHERE exercice.id = ?`
-    connection.query(sql, [idExercice], (err, result) => {
-      if (err) {
-        res.status(500).send("Erreur dans la récupération du média d'un exercice")
-      } else {
-        res.send(result)
-      }
-    })
-  })
-
 //POST 
 //post a new exercice
 router.post('/', verifyToken, (req, res) => {
@@ -106,30 +104,6 @@ router.post('/', verifyToken, (req, res) => {
       } else {
         res.sendStatus(200)
       }
-  })
-})
-
-//post a media of an exercicie
-router.post('/:id/medias', (req, res) => {
-  const formData = req.body
-  const sqlInsert = `INSERT INTO media SET ?`
-  connection.query(sqlInsert, [formData], (err, results) => {
-    if(err) {
-      res.status(500).send("Erreur lors de la création d'un média")
-    } else {
-      const idExercice = req.params.id
-      const sqlUpdate = 
-      `UPDATE media 
-      SET exercice_id = ? 
-      WHERE id = ?`
-      connection.query(sqlUpdate, [idExercice, results.insertId], (err, results) => {
-        if (err) {
-          res.status(500).send("Erreur dans la création de l'association du média et de son exercice")
-        } else {
-          res.sendStatus(200)
-        }
-      })
-    }
   })
 })
 
@@ -151,31 +125,6 @@ router.put('/:id', verifyToken, (req,res) => {
   })
 })
 
-//Update a track of an exercice
-router.put('/:id/medias/:media', (req,res) => {
-  // const formData = req.body
-  const values = [
-    formData = req.body,
-    idMedia = req.params.media,
-    idExercice = req.params.id,
-  ]
-  
-  const sql = 
-  `UPDATE media
-  SET ?
-  WHERE 1=1
-  AND id = ?
-  AND exercice_id = ?`
-
-  connection.query(sql, values, (err, results) => {
-    if (err) {
-      res.status(500).send("Erreur dans la modification du média")
-    } else {
-      res.status(200).send(req.body)
-    }
-  })
-})
-
 //DELETE
 //delete an exercice
 router.delete('/:id', verifyToken, (req,res) => {
@@ -186,28 +135,6 @@ router.delete('/:id', verifyToken, (req,res) => {
   connection.query(sql, [idExercice], err => {
     if (err) {
       res.status(500).send("Erreur lors de la suppresion d'un exercice")
-    } else {
-      res.sendStatus(200)
-    }
-  })
-})
-
-//delete a media of an exercice
-router.delete('/:id/medias/:media', (req,res) => {
-  const values = [
-    idExercice = req.params.id,
-    idMedia = req.params.media
-  ]
-
-  const sql = 
-  `DELETE FROM media
-  WHERE 1=1
-  AND id = ? 
-  AND exercice_id = ?`
-  
-  connection.query(sql, values, err => {
-    if (err) {
-      res.status(500).send("Erreur dans la suppression du média de l'exercice")
     } else {
       res.sendStatus(200)
     }

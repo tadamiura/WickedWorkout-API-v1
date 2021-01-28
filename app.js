@@ -17,6 +17,7 @@ app.use(
 app.use('/api/exercices', routes.Exercices)
 app.use('/api/auth', routes.Authentification),
 app.use('/api/register', routes.Register)
+app.use('/api/users', routes.Users)
 app.use('/api/warmups', routes.WarmUps)
 
 app.get('/api/verify', verifyToken, (req, res) => {
