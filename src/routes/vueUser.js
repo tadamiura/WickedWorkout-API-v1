@@ -16,7 +16,7 @@ router.post('/', (req, res) => {
     }
     connection.query('INSERT INTO user SET ?', user, (err, result) => {
         if(err) {
-            return res.status(500).send('Cannot register the user')
+            return res.status(500).json(['Cannot register the user'])
         } else {
             res.sendStatus(201)
         }
