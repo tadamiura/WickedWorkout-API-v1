@@ -23,6 +23,7 @@ const checkUser = (req, res, next) => {
             return res.status(401).send({ auth: false, token: null })
         }
         req.user = result[0]
+        // console.log('req.user', req.user)
         next()
     })
 }
@@ -30,11 +31,11 @@ const checkUser = (req, res, next) => {
 const createToken = (req, res, next) => {
     const tokenUserInfo = {
         id: req.user.id,
-        name: req.user.username,
+        username: req.user.nom,
         email: req.user.email,
-        prenom: req.user.firstname
+        firstname: req.user.prenom
       } 
-    const token = jwt.sign(
+    const jwtToken = jwt.sign(
         {
             sub: tokenUserInfo.id.toString()
         },
@@ -46,12 +47,16 @@ const createToken = (req, res, next) => {
             algorithm: 'HS256' 
         }
     )
-    if(!token) {
+    const user = tokenUserInfo
+    // console.log('jwtToken', jwtToken)
+    // console.log('user', user)
+
+    if(!jwtToken) {
         throw "error while creating token"
     }
     res.status(200).json({
-        tokenUserInfo,
-        token
+        user,
+        jwtToken
     })
 }
 
