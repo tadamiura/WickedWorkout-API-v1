@@ -19,7 +19,8 @@ app.use('/api/auth', routes.Authentification),
 app.use('/api/register', routes.Register)
 app.use('/api/users', routes.Users)
 app.use('/api/warmups', routes.WarmUps)
-//to vue front-end sign up
+
+//Vue app endpoints
 app.use('/api/vue/user', routes.VueUser)
 app.use('/api/vue/auth', routes.VueAuth)
 

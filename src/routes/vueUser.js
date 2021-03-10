@@ -1,14 +1,9 @@
 const express = require('express')
-const {
-    connection
-} = require('../helper/conf')
+const { connection } = require('../helper/conf')
 const bcrypt = require('bcryptjs')
 const jsonwebtoken = require('jsonwebtoken')
-const {
-    secret
-} = require('../helper/service.js')
+const { secret } = require('../helper/service.js')
 const router = express.Router()
-
 
 const isLoggedIn = (req, res, next) => {
     try {
@@ -32,7 +27,7 @@ const isLoggedIn = (req, res, next) => {
 }
 
 router.get('/current', isLoggedIn, (req, res) => {
-    if(req.user) {
+    if (req.user) {
         res.json(req.user)
     } else {
         console.log('else end')

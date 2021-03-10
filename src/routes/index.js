@@ -12,6 +12,7 @@ module.exports = {
     Register,
     Users,
     WarmUps,
+    
     //for vue app
     VueUser,
     VueAuth
