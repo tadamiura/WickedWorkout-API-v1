@@ -23,7 +23,6 @@ const checkUser = (req, res, next) => {
             return res.status(401).send({ auth: false, token: null })
         }
         req.user = result[0]
-        // console.log('req.user', req.user)
         next()
     })
 }
