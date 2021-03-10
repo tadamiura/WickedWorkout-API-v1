@@ -31,9 +31,9 @@ const checkUser = (req, res, next) => {
 const createToken = (req, res, next) => {
     const tokenUserInfo = {
         id: req.user.id,
-        username: req.user.nom,
+        nom: req.user.nom,
         email: req.user.email,
-        firstname: req.user.prenom
+        prenom: req.user.prenom
       } 
     const jwtToken = jwt.sign(
         {
@@ -48,9 +48,6 @@ const createToken = (req, res, next) => {
         }
     )
     const user = tokenUserInfo
-    // console.log('jwtToken', jwtToken)
-    // console.log('user', user)
-
     if(!jwtToken) {
         throw "error while creating token"
     }

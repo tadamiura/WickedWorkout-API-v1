@@ -20,7 +20,6 @@ const isLoggedIn = (req, res, next) => {
             connection.query(sql, decodedToken.sub, (err, result) => {
                 if (err) {
                     return res.status('400').send('Error to fetch user')
-                    // next()
                 }
                 req.user = result[0]
                 next()
@@ -32,9 +31,7 @@ const isLoggedIn = (req, res, next) => {
     }
 }
 
-router.get('/current', isLoggedIn, (req, res, next) => {
-
-    console.log('curent', req.user)
+router.get('/current', isLoggedIn, (req, res) => {
     if(req.user) {
         res.json(req.user)
     } else {
