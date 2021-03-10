@@ -1,8 +1,6 @@
 const express = require('express')
 const { connection } = require('../helper/conf.js')
 const router = express.Router()
-// const { verifyToken } = require('../helper/auth.service')
-
 
 //Get all warm ups
 router.get('/', (req, res) => {
