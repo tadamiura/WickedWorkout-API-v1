@@ -1,8 +1,12 @@
 const express = require('express')
-const { connection } = require('../helper/conf')
+const {
+    connection
+} = require('../helper/conf')
 const bcrypt = require('bcryptjs')
 const jsonwebtoken = require('jsonwebtoken')
-const { secret } = require('../helper/service.js')
+const {
+    secret
+} = require('../helper/service.js')
 const router = express.Router()
 
 const isLoggedIn = (req, res, next) => {
@@ -48,6 +52,28 @@ router.post('/', (req, res) => {
             return res.status(500).json(['Cannot register the user'])
         } else {
             res.sendStatus(201)
+        }
+    })
+})
+
+router.put('/:id', (req, res) => {
+    const body = req.body
+    const idUser = req.params.id
+    const user = {
+        nom: body.username,
+        prenom: body.firstname,
+        email: body.email,
+    }
+    const sql =
+        `UPDATE user 
+    SET ?
+    WHERE id = ?`
+
+    connection.query(sql, [user, idUser], (err, result) => {
+        if (err) {
+            res.status(500).send('Update user failed')
+        } else {
+            res.sendStatus(200)
         }
     })
 })
